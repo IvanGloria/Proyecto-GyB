@@ -1,20 +1,75 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item routerLink="/trabajadores" routerDirection="root">
+          <div  class="update-card-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          Trabajadores
+        </ion-item>
+        <ion-item routerLink="/suministros" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="albums-outline"></ion-icon>
+          </div>
+          Suministros
+        </ion-item>
+        <ion-item routerLink="/contabilidad" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="wallet-outline"></ion-icon>
+          </div>
+          Contabilidad
+        </ion-item>
+        <ion-item routerLink="/proyectos" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="reader-outline"></ion-icon>
+          </div>
+          Proyectos
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>GYB CONSTRUCCIONES</ion-title>
+        <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" slot="end">
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-home">
+      <div class="welcome-card">
+        <h2>¡Bienvenido a GYB Construcciones!</h2>
+        <p>Estamos felices de tenerte aquí. ¡Explora nuestras últimas actualizaciones!</p>
+      </div>
+
+      <div class="updates-section">
+        <ion-card *ngIf="updates.length === 0">
+          <ion-card-content>
+            <p>No hay actualizaciones recientes.</p>
+          </ion-card-content>
+        </ion-card>
+      
+        <div *ngFor="let update of updates" class="update-card">
+          <div class="update-card-icon">
+            <ion-icon [name]="update.icon"></ion-icon>
+          </div>
+          <div class="update-card-content">
+            <h4>{{ update.title }}</h4>
+            <p>{{ update.description }}</p>
+            <small>{{ update.time | date: 'short' }}</small>
+          </div>
+        </div>
+      </div>
+        
+    </ion-content>
+    </div>
+    </ion-content>
