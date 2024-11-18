@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HistoryService } from '../shared/service/history/history.service';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  updates: { icon: string; title: string; description: string; time: Date }[] = [];
 
-  constructor() {}
+  constructor(private historyService: HistoryService) {}
 
+  ngOnInit() {
+    this.loadUpdates();
+  }
+
+  loadUpdates() {
+    this.updates = this.historyService.getUpdates();
+  }
+  
 }

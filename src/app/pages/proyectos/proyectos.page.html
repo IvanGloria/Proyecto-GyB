@@ -1,0 +1,42 @@
+<ion-content [fullscreen]="true">
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Proyectos</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item routerLink="/home" routerDirection="root">
+          Home
+        </ion-item>
+        <ion-item routerLink="/trabajadores" routerDirection="root">
+          Trabajadores
+        </ion-item>
+        <ion-item routerLink="/suministros" routerDirection="root">
+          Suministros
+        </ion-item>
+        <ion-item routerLink="/contabilidad" routerDirection="root">
+          Contabilidad
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Proyectos</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      Tap the button in the toolbar to open the menu.
+    </ion-content>
+  </div>
+</ion-content>
+
+
+  
+

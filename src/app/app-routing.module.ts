@@ -10,21 +10,33 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
+  { 
+    path: 'trabajadores', 
+    loadChildren: () => import('./pages/trabajadores/trabajadores.module').then(m => m.TrabajadoresPageModule) 
+  },
+  { 
+    path: 'suministros', 
+    loadChildren: () => import('./pages/suministros/suministros.module').then(m => m.SuministrosPageModule) 
+  },
+  { 
+    path: 'contabilidad', 
+    loadChildren: () => import('./pages/contabilidad/contabilidad.module').then(m => m.ContabilidadPageModule) 
+  },
+  { 
+    path: 'proyectos', 
+    loadChildren: () => import('./pages/proyectos/proyectos.module').then(m => m.ProyectosPageModule) 
+  },
   {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  // {
-  //   path: 'register',
-  //   loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
-  // },
+
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
+

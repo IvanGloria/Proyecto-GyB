@@ -1,27 +1,136 @@
-#container {
+/* Fondo del home */
+.ion-home { 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.85);
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  
+}
+
+/* Estilo de la tarjeta de bienvenida */
+.welcome-card {
+  background: rgba(255, 255, 255, 0.9);
+  background-color: #74b9ff ;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 20px auto;
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  animation: fadeInDown 1s ease-out;
+  font-family: 'Cooper Black', sans-serif;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+/* Animación de la tarjeta */
+@keyframes fadeInDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-#container p {
+/* Texto de bienvenida */
+.welcome-card h2 {
+  color: #333;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.welcome-card p {
+  color: #666;
   font-size: 16px;
-  line-height: 22px;
+}
 
-  color: #8c8c8c;
+.updates-section {
+  margin-top: 30px;
+  animation: slideInUp 1.2s ease-in-out;
+}
 
+@keyframes slideInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.update-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.update-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.update-card-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #74b9ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  margin-right: 15px;
+}
+
+.update-card-content {
+  flex-grow: 1;
+}
+
+.update-card-content h4 {
   margin: 0;
+  font-size: 16px;
+  color: #333;
 }
 
-#container a {
-  text-decoration: none;
+.update-card-content p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #777;
 }
+
+/* Ajuste responsive */
+@media (max-width: 768px) {
+  .welcome-card {
+    max-width: 90%;
+  }
+  .update-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .update-card-icon {
+    margin-bottom: 10px;
+  }
+}
+
+img {
+  width: 80px; 
+  height: auto; 
+}
+
+ion-title{
+  font-family: 'Cooper Black', sans-serif;
+  color: #27588a;
+}
+
+
