@@ -1,0 +1,90 @@
+.update-card-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #74b9ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    margin-right: 15px;
+  }
+
+
+  .search-card{
+    animation: fadeInDown 1s ease-out;
+  }
+  
+
+/* Animación de la tarjeta */
+@keyframes fadeInDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+.list-card{
+  animation: slideInUp 1.2s ease-in-out;
+}
+
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+  
+
+  img {
+    width: 80px; 
+    height: auto; 
+  }
+  
+  ion-title {
+    font-family: 'Cooper Black', sans-serif;
+    color: #27588a;
+  }
+
+/* Fondo empresarial con degradado */
+ion-content {
+  --background: linear-gradient(135deg, #a8c4e0 1%, #ffffff 50%, #a8c4e0 90%);
+}
+
+/* Opcional: Sombra para tarjetas */
+ion-card {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+/* Ajustes de la lista de trabajadores */
+.list-card ion-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  margin: 5px 0;
+  padding: 10px;
+}
+
+/* Estilo para el buscador */
+.search-card ion-input {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px 10px;
+}
+
+.search-card ion-button {
+  background-color: #27588a;
+  color: white;
+  border-radius: 20px;
+}

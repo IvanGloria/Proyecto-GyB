@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agregar Trabajador</ion-title>
+    <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" slot="end">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (submit)="onSubmit()">
+    <div class="tadd-card">
+    <ion-card>
+      <ion-item>
+        <ion-label position="stacked">Cargo</ion-label>
+        <ion-input type="text" [(ngModel)]="worker.role" name="role" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="worker.name" name="name" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Apellido</ion-label>
+      <ion-input type="text" [(ngModel)]="worker.apellido" name="apellido" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Identificacion</ion-label>
+      <ion-input type="number" [(ngModel)]="worker.identificacion" name="identificacion" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Fecha de nacimiento</ion-label>
+      <ion-input type="date" [(ngModel)]="worker.fn" name="fn" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Sexo</ion-label>
+      <ion-input type="text" [(ngModel)]="worker.sexo" name="sexo" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">EPS</ion-label>
+      <ion-select [(ngModel)]="worker.eps" name="eps" placeholder="Seleccionar EPS" required>
+      <ion-select-option *ngFor="let eps of epsOptions" [value]="eps">{{ eps }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">AFP</ion-label>
+      <ion-select [(ngModel)]="worker.afp" name="afp" placeholder="Seleccionar AFP" required>
+      <ion-select-option *ngFor="let afp of afpOptions" [value]="afp">{{ afp }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Fecha de ingreso</ion-label>
+      <ion-input type="date" [(ngModel)]="worker.fi" name="fi" required></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit">Guardar</ion-button>
+    </ion-card>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,45 @@
+.tadd-card{
+  animation: fadeInDown 1s ease-out;
+}
+
+
+@keyframes fadeInDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+img {
+    width: 80px; 
+    height: auto; 
+  }
+  
+  ion-title{
+    font-family: 'Cooper Black', sans-serif;
+    color: #27588a;
+  }
+
+
+/* Fondo empresarial con degradado */
+ion-content {
+  --background: linear-gradient(135deg, #27588a 1%, #7ef191 50%, #74b9ff 90%);
+}
+
+/* Opcional: Estilo para las tarjetas */
+.tadd-card ion-card {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+ion-button {
+  background-color: #27588a;
+  color: white;
+  border-radius: 20px;
+}
+

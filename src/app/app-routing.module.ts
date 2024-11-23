@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'trabajadores', 
     loadChildren: () => import('./pages/trabajadores/trabajadores.module').then(m => m.TrabajadoresPageModule) 
   },
+  {
+    path: 'trabajadores-add',
+    loadChildren: () => import('./pages/trabajadores-add/trabajadores-add.module').then( m => m.TrabajadoresAddPageModule)
+  },
   { 
     path: 'suministros', 
     loadChildren: () => import('./pages/suministros/suministros.module').then(m => m.SuministrosPageModule) 
@@ -31,7 +35,6 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-
 ];
 
 @NgModule({

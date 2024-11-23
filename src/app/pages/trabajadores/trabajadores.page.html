@@ -2,21 +2,33 @@
   <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Trabajadores</ion-title>
+        <ion-title>Menú</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item routerLink="/home" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="home-outline"></ion-icon>
+          </div>
           Home
         </ion-item>
         <ion-item routerLink="/suministros" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="albums-outline"></ion-icon>
+          </div>
           Suministros
         </ion-item>
         <ion-item routerLink="/contabilidad" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="wallet-outline"></ion-icon>
+          </div>
           Contabilidad
         </ion-item>
         <ion-item routerLink="/proyectos" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="reader-outline"></ion-icon>
+          </div>
           Proyectos
         </ion-item>
       </ion-list>
@@ -29,10 +41,50 @@
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>Trabajadores</ion-title>
+        <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" slot="end">
       </ion-toolbar>
     </ion-header>
+
+    <!-- Buscador -->
     <ion-content class="ion-padding">
-      Tap the button in the toolbar to open the menu.
+      <div class="search-card"> 
+      <ion-card>
+      <ion-item>
+        <ion-input
+          type="text"
+          placeholder="Buscar trabajadores..."
+          [(ngModel)]="searchTerm"
+          (ionInput)="onSearch()"
+        ></ion-input>
+        <ion-button fill="solid" (click)="goToAddWorker()">
+          <ion-icon slot="start" name="add"></ion-icon>
+          Agregar
+        </ion-button>
+      </ion-item>
+      </ion-card>
+      </div>
+
+      <!-- Lista de trabajadores -->
+      <div class="list-card"> 
+      <ion-card>
+        <ion-list>
+          <ion-item *ngFor="let worker of filteredWorkers">
+            <ion-label>
+              <h2>{{ worker.name }}</h2>
+              <p>{{ worker.role }}</p>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button fill="clear" (click)="editWorker(worker)">
+                <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" (click)="deleteWorker(worker.id)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>                
+      </ion-card>
+      </div>
     </ion-content>
   </div>
 </ion-content>
