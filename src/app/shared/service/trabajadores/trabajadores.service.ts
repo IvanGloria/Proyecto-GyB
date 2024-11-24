@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs/operators';
 
 export interface Worker {
-  id: number;
+  id?: string; 
+  userId: string;
   role: string;
   identificacion: string;
   name: string;
@@ -12,38 +15,43 @@ export interface Worker {
   eps: string;
   afp: string;
   fi: string;
+  image?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrabajadoresService {
-  private workers: Worker[] = [];
-  private workersSubject = new BehaviorSubject<Worker[]>([]);
-  private currentId = 1;
+  private trabajadoresCollection: AngularFirestoreCollection<Worker>;
 
-  constructor() {}
-
-  getWorkers() {
-    return this.workersSubject.asObservable(); // Observable para que los componentes se suscriban
+  constructor(private firestore: AngularFirestore) {
+    this.trabajadoresCollection = this.firestore.collection('Trabajadores');
   }
 
-  addWorker(worker: Worker): void {
-    worker.id = this.currentId++;
-    this.workers.push(worker);
-    this.workersSubject.next([...this.workers]); // Emitir nueva lista
+  getWorkers(userId: string): Observable<Worker[]> {
+    return this.firestore.collection<Worker>('Trabajadores', ref => 
+      ref.where('userId', '==', userId))
+      .snapshotChanges()
+      .pipe(
+        map(actions => 
+          actions.map(a => {
+            const data = a.payload.doc.data() as Worker;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })
+        )
+      );
   }
 
-  updateWorker(updatedWorker: Worker): void {
-    const index = this.workers.findIndex(worker => worker.id === updatedWorker.id);
-    if (index > -1) {
-      this.workers[index] = { ...updatedWorker };
-      this.workersSubject.next([...this.workers]); // Emitir nueva lista
-    }
+  addWorker(worker: Worker): Observable<any> {
+    return from(this.trabajadoresCollection.add(worker));
   }
 
-  deleteWorker(id: number): void {
-    this.workers = this.workers.filter(worker => worker.id !== id);
-    this.workersSubject.next([...this.workers]); // Emitir nueva lista
+  updateWorker(id: string, updatedWorker: Worker): Observable<void> {
+    return from(this.trabajadoresCollection.doc(id).update(updatedWorker));
+  }
+
+  deleteWorker(id: string): Observable<void> {
+    return from(this.trabajadoresCollection.doc(id).delete());
   }
 }

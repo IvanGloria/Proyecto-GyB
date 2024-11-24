@@ -24,6 +24,7 @@
     "@angular/router": "^18.0.0",
     "@capacitor/core": "6.1.2",
     "@ionic/angular": "^8.4.0",
+    "@supabase/supabase-js": "^2.46.1",
     "firebase": "^11.0.2",
     "ionicons": "^7.0.0",
     "rxjs": "^7.8.1",

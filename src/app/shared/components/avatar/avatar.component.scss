@@ -1,0 +1,41 @@
+.avatar-container {
+    width: 240px; 
+    height: 240px; 
+    border-radius: 8px; 
+    background-color: #f0f0f0; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+    cursor: pointer; 
+    border: 2px solid #ccc; 
+    position: relative; 
+  }
+  
+  .avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+  
+  .avatar-container:hover {
+    border-color: #27588a; 
+  }
+  
+  .avatar-container::after {
+    content: "Click para cambiar";
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    font-size: 12px;
+    display: none; 
+  }
+  
+  .avatar-container:hover::after {
+    display: block; 
+  }
+  

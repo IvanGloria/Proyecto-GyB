@@ -1,3 +1,12 @@
-<p>
-  avatar works!
-</p>
+<div class="avatar-container" (click)="file.click()">
+  <img [src]="control.value || image" alt="AvatarFoto" (error)="onImageError()" />
+</div>
+<br>
+<input 
+  #file
+  type="file" 
+  [accept]="mimeType" 
+  [multiple]="false" 
+  (change)="uploadFoto($event)" 
+  [disabled]="onlyView"
+  style="display: none;">

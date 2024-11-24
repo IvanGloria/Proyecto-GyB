@@ -9,50 +9,57 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (submit)="onSubmit()">
+  <form [formGroup]="workerForm" (ngSubmit)="onSubmit()">
     <div class="tadd-card">
     <ion-card>
       <ion-item>
         <ion-label position="stacked">Cargo</ion-label>
-        <ion-input type="text" [(ngModel)]="worker.role" name="role" required></ion-input>
-    </ion-item>
+        <ion-input type="text" formControlName="role" required></ion-input>
+      </ion-item>
     <ion-item>
       <ion-label position="stacked">Nombre</ion-label>
-      <ion-input type="text" [(ngModel)]="worker.name" name="name" required></ion-input>
+      <ion-input type="text" formControlName="name" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Apellido</ion-label>
-      <ion-input type="text" [(ngModel)]="worker.apellido" name="apellido" required></ion-input>
+      <ion-input type="text" formControlName="apellido" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Identificacion</ion-label>
-      <ion-input type="number" [(ngModel)]="worker.identificacion" name="identificacion" required></ion-input>
+      <ion-input type="number" formControlName="identificacion" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Fecha de nacimiento</ion-label>
-      <ion-input type="date" [(ngModel)]="worker.fn" name="fn" required></ion-input>
+      <ion-input type="date" formControlName="fn" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Sexo</ion-label>
-      <ion-input type="text" [(ngModel)]="worker.sexo" name="sexo" required></ion-input>
+      <ion-input type="text" formControlName="sexo" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">EPS</ion-label>
-      <ion-select [(ngModel)]="worker.eps" name="eps" placeholder="Seleccionar EPS" required>
-      <ion-select-option *ngFor="let eps of epsOptions" [value]="eps">{{ eps }}</ion-select-option>
+      <ion-select formControlName="eps" placeholder="Seleccionar EPS" required>
+        <ion-select-option *ngFor="let eps of epsOptions" [value]="eps">{{ eps }}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">AFP</ion-label>
-      <ion-select [(ngModel)]="worker.afp" name="afp" placeholder="Seleccionar AFP" required>
-      <ion-select-option *ngFor="let afp of afpOptions" [value]="afp">{{ afp }}</ion-select-option>
+      <ion-select formControlName="afp" placeholder="Seleccionar AFP" required>
+        <ion-select-option *ngFor="let afp of afpOptions" [value]="afp">{{ afp }}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Fecha de ingreso</ion-label>
-      <ion-input type="date" [(ngModel)]="worker.fi" name="fi" required></ion-input>
+      <ion-input type="date" formControlName="fi" required></ion-input>
     </ion-item>
-    <ion-button expand="block" type="submit">Guardar</ion-button>
+    <br>
+    <br>
+    <ion-item>
+      <app-avatar [control]="workerForm.get('image')!"></app-avatar>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="!workerForm.valid" class="ion-margin">
+      {{ editId ? 'Actualizar' : 'Guardar' }}
+    </ion-button>
     </ion-card>
     </div>
   </form>

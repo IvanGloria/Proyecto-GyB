@@ -70,14 +70,14 @@
         <ion-list>
           <ion-item *ngFor="let worker of filteredWorkers">
             <ion-label>
-              <h2>{{ worker.name }}</h2>
-              <p>{{ worker.role }}</p>
+              <h2>{{ worker.name + ' ' + worker.apellido }}</h2>
+              <p>{{ worker.role  }}</p>
             </ion-label>
             <ion-buttons slot="end">
               <ion-button fill="clear" (click)="editWorker(worker)">
                 <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
               </ion-button>
-              <ion-button fill="clear" color="danger" (click)="deleteWorker(worker.id)">
+              <ion-button fill="clear" color="danger" (click)="deleteWorker(worker)">
                 <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
               </ion-button>
             </ion-buttons>

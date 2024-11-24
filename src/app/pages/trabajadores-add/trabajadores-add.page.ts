@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TrabajadoresService, Worker } from 'src/app/shared/service/trabajadores/trabajadores.service';
+import { Router } from '@angular/router';
+import { TrabajadoresService } from 'src/app/shared/service/trabajadores/trabajadores.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SupabaseService } from 'src/app/shared/service/storageService/supabase.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-trabajadores-add',
@@ -8,29 +11,69 @@ import { TrabajadoresService, Worker } from 'src/app/shared/service/trabajadores
   styleUrls: ['./trabajadores-add.page.scss'],
 })
 export class TrabajadoresAddPage implements OnInit {
-  worker: Worker = { id: 0, role: '', name: '', identificacion: '', apellido: '', sexo: '', fn: '', eps: '', afp: '', fi: '' };
-  epsOptions: string[] = ['Sura', 'Coomeva', 'Mutual ser', 'Sanitas', 'Coosalud', 'Salud total', 'Cajacopi',
-    'Confamiliar'];
+  workerForm!: FormGroup;
+  userId: string | undefined;
+  editId: string | null = null;
+  selectedImage: File | null = null;
+
+  epsOptions: string[] = ['Sura', 'Coomeva', 'Mutual ser', 'Sanitas', 'Coosalud', 'Salud total', 'Cajacopi', 'Confamiliar'];
   afpOptions: string[] = ['Colfondos', 'Colpensiones', 'Fonprecon', 'Porvenir', 'Proteccion'];
-  isEdit = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, 
-    private trabajadoresService: TrabajadoresService) {}
+  constructor(
+    private router: Router, private trabajadoresService: TrabajadoresService, private fb: FormBuilder,
+    private supabaseS: SupabaseService, private afAuth: AngularFireAuth) {}
 
-    ngOnInit() {
-      const navigation = this.router.getCurrentNavigation();
-      const state = navigation?.extras.state as { worker: Worker };
-      if (state?.worker) {
-        this.worker = { ...state.worker };
+  ngOnInit(): void {
+    this.workerForm = this.fb.group({
+      role: ['', Validators.required],
+      name: ['', Validators.required],
+      apellido: ['', Validators.required],
+      identificacion: ['', Validators.required],
+      fn: ['', Validators.required],
+      sexo: ['', Validators.required],
+      eps: ['', Validators.required],
+      afp: ['', Validators.required],
+      fi: ['', Validators.required],
+      image: ['']
+    });
+
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userId = user.uid;
+      }
+    });
+
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { worker: any };
+    if (state?.worker) {
+      this.workerForm.patchValue(state.worker);
+      this.editId = state.worker.id; 
+    }
+  }
+
+  async onSubmit() {
+    if (this.workerForm.valid && this.userId) {
+      try {
+        const workerData = { ...this.workerForm.value, userId: this.userId };
+
+        if (this.selectedImage) {
+          const uploadResult = await this.supabaseS.uploadFoto(this.selectedImage);
+          if (uploadResult) {
+            const imageUrl = await this.supabaseS.getFotoUrl(uploadResult.path);
+            workerData.image = imageUrl;
+          }
+        }
+
+        if (this.editId) {
+          await this.trabajadoresService.updateWorker(this.editId, workerData).toPromise();
+        } else {
+          await this.trabajadoresService.addWorker(workerData).toPromise();
+        }
+
+        this.router.navigate(['/trabajadores']);
+      } catch (error) {
+        console.error('Error saving worker:', error);
       }
     }
-  
-    onSubmit() {
-      if (this.worker.id) {
-        this.trabajadoresService.updateWorker(this.worker);
-      } else {
-        this.trabajadoresService.addWorker(this.worker);
-      }
-      this.router.navigate(['/trabajadores']);
-    }
+  }
 }
