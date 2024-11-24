@@ -13,6 +13,8 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.loadUpdates();
+
+    
   }
 
   loadUpdates() {

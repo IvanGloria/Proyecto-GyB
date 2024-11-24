@@ -1,0 +1,72 @@
+.update-card-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #74b9ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    margin-right: 15px;
+  }
+
+
+  // FORMULARIO DE AGREGAR 
+
+  ion-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--ion-color-dark);
+  }
+  
+  ion-input,
+  ion-textarea {
+    font-size: 14px;
+    color: var(--ion-color-dark);
+  }
+  
+  ion-item {
+    margin-bottom: 10px; /* Espaciado entre elementos */
+    --inner-padding-start: 10px;
+    --inner-padding-end: 10px;
+  }
+  
+  ion-button {
+    margin-top: 20px;
+    width: 100%; /* Botón ocupa todo el ancho */
+  }
+
+
+
+
+  // FORMULARIO DE ENTREGA
+
+
+  .center-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  ion-item {
+    --background: #fff;
+    margin-bottom: 10px;
+  }
+  
+  ion-label {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .register-button {
+    margin-top: 20px;
+    font-weight: bold;
+    --background: #007bff;
+    --background-hover: #0056b3;
+    --background-activated: #004080;
+    --color: #fff;
+  }
+  
+  

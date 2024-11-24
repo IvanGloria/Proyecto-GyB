@@ -1,4 +1,5 @@
 <ion-content [fullscreen]="true">
+  <!-- Menú lateral -->
   <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
@@ -8,20 +9,34 @@
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item routerLink="/home" routerDirection="root">
+          <div class="update-card-icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
           Home
         </ion-item>
         <ion-item routerLink="/trabajadores" routerDirection="root">
+          <div class="update-card-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
           Trabajadores
         </ion-item>
         <ion-item routerLink="/contabilidad" routerDirection="root">
+          <div class="update-card-icon">
+            <ion-icon name="wallet-outline"></ion-icon>
+          </div>
           Contabilidad
         </ion-item>
         <ion-item routerLink="/proyectos" routerDirection="root">
+          <div class="update-card-icon">
+            <ion-icon name="reader-outline"></ion-icon>
+          </div>
           Proyectos
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
+
+  <!-- Contenido principal -->
   <div class="ion-page" id="main-content">
     <ion-header>
       <ion-toolbar>
@@ -31,12 +46,78 @@
         <ion-title>Suministros</ion-title>
       </ion-toolbar>
     </ion-header>
+
     <ion-content class="ion-padding">
-      Tap the button in the toolbar to open the menu.
+      <ion-grid>
+        <ion-row>
+          <!-- Formulario para agregar/editar productos -->
+          <ion-col size="12">
+            <app-button2
+              [productForm]="currentProduct"
+              (addProduct)="agregarProducto($event)"
+            ></app-button2>
+          </ion-col>
+    
+          <!-- Inventario -->
+          <ion-col size="12">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Inventario</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list>
+                  <ion-item *ngFor="let producto of productos; let i = index">
+                    <ion-label>
+                      <h2>{{ producto.nombre }}</h2>
+                      <p>Descripción: {{ producto.descripcion }}</p>
+                      <p>Cantidad: {{ producto.cantidad }}</p>
+                      <p>Valor Unitario: ${{ producto.valorUnitario }}</p>
+                      <p>Valor Total: ${{ producto.valorTotal }}</p>
+                    </ion-label>
+                    <ion-buttons slot="end">
+                      <ion-button color="warning" (click)="editarProducto(i)">
+                        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                      </ion-button>
+                      <ion-button color="danger" (click)="eliminarProducto(i)">
+                        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                  </ion-item>
+                </ion-list>
+
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          
+          <!-- Formulario para registrar entrega -->
+          <ion-col size="12">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Registrar Entrega</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-item>
+                  <ion-label position="stacked">Producto</ion-label>
+                  <ion-select placeholder="Seleccionar Producto">
+                    <ion-select-option *ngFor="let producto of productos" [value]="producto.nombre">
+                      {{ producto.nombre }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Cantidad</ion-label>
+                  <ion-input type="number" placeholder="Ej. 10"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Proyecto</ion-label>
+                  <ion-input placeholder="Ej. Proyecto A"></ion-input>
+                </ion-item>
+                <ion-button expand="block" color="primary">Registrar Entrega</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-content>
   </div>
 </ion-content>
-
-
-  
-

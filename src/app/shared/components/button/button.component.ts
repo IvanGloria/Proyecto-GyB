@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+
 type colorButton = "success" | "danger" | "primary";
 type buttonType = "button" | "submit";
 
@@ -24,5 +25,8 @@ export class ButtonComponent  implements OnInit {
   click(){
     this.doClick.emit(true);
   }
+
+
+
 
 }

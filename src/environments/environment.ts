@@ -5,13 +5,12 @@
 export const environment = {
   production: false,
   FireBaseGyB : {
-  apiKey: "AIzaSyCr8dbfhBVBFd6Q43cU55STaCyDnZq4Ga0",
-  authDomain: "gyb-construcciones.firebaseapp.com",
-  projectId: "gyb-construcciones",
-  storageBucket: "gyb-construcciones.firebasestorage.app",
-  messagingSenderId: "295354360529",
-  appId: "1:295354360529:web:31e104e99162ff44fc9bf0",
-  measurementId: "G-LGPZSD3GQ2"
+    apiKey: "AIzaSyDCT0ZQSAyHBipkMPkE2Pm_2TRxd6w-9Go",
+    authDomain: "gyb-app-bc172.firebaseapp.com",
+    projectId: "gyb-app-bc172",
+    storageBucket: "gyb-app-bc172.firebasestorage.app",
+    messagingSenderId: "1027374230060",
+    appId: "1:1027374230060:web:75f74ce74df812b9e9ff89"
   }
 };
 
