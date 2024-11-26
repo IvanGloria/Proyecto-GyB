@@ -8,7 +8,6 @@ import autoTable from 'jspdf-autotable';
   styleUrls: ['./contabilidad.page.scss'],
 })
 export class ContabilidadPage {
-  // Capital y transacciones
   capital: number = 0;
   tipo: 'ingreso' | 'egreso' = 'ingreso';
   monto: number = 0;
@@ -128,12 +127,12 @@ export class ContabilidadPage {
       headStyles: { fillColor: [255, 200, 100] },
     });
   
-    // Total de la nómina
+    
     const totalNominaY = doc.lastAutoTable.finalY + 10;
     doc.setFontSize(12);
     doc.text(`Total Nómina: $${this.totalNomina.toFixed(2)}`, 10, totalNominaY);
   
-    // Descargar el PDF
+    
     doc.save('soporte-financiero.pdf');
   }
 }
