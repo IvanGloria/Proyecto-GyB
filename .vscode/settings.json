@@ -4,8 +4,12 @@
     "@ionic/angular/standalone"
   ],
   "cSpell.words": [
+<<<<<<< HEAD
     "Nomina",
     "suminbutton",
     "Suministros"
+=======
+    "Contabilidad"
+>>>>>>> origin/Contabilidad
   ]
 }

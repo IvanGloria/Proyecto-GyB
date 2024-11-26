@@ -40,6 +40,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/proyectos-add/proyectos-add.module').then( m => m.ProyectosAddPageModule),
     canActivate : [guardSGuard]
   },
+  
   {
     path: '**',
     redirectTo: 'login',
