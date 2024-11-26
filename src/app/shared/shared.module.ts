@@ -8,6 +8,7 @@ import { AuthService } from './service/authService/auth-service.service';
 import { LoadingService } from './service/loadingService/loading-service.service'; 
 import { AvatarComponent } from './components/avatar/avatar.component';
 
+
 const Modules = [
   CommonModule,
   FormsModule,

@@ -11,6 +11,10 @@
     margin-right: 15px;
   }
 
+  ion-title{
+    font-family: 'Cooper Black', sans-serif;
+    color: #27588a;
+  }
 
   // FORMULARIO DE AGREGAR 
 
@@ -32,10 +36,6 @@
     --inner-padding-end: 10px;
   }
   
-  ion-button {
-    margin-top: 20px;
-    width: 100%; /* Botón ocupa todo el ancho */
-  }
 
 
 
@@ -68,5 +68,4 @@
     --background-activated: #004080;
     --color: #fff;
   }
-  
-  
+

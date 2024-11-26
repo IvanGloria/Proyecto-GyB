@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+
 const routes: Routes = [
   {
     path: 'login',
@@ -17,10 +18,6 @@ const routes: Routes = [
   { 
     path: 'suministros', 
     loadChildren: () => import('./pages/suministros/suministros.module').then(m => m.SuministrosPageModule) 
-  },
-  { 
-    path: 'contabilidad', 
-    loadChildren: () => import('./pages/contabilidad/contabilidad.module').then(m => m.ContabilidadPageModule) 
   },
   { 
     path: 'proyectos', 
