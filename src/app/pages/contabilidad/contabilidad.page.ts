@@ -39,12 +39,12 @@ export class ContabilidadPage {
     this.transacciones.unshift(nuevaTransaccion);
     this.capital += this.tipo === 'ingreso' ? this.monto : -this.monto;
 
-    // Resetear campos
+    
     this.monto = 0;
     this.descripcion = '';
   }
 
-  // Agregar trabajador
+  
   agregarTrabajador() {
     if (!this.nombre || !this.cargo || !this.sueldo) return;
 
