@@ -2,38 +2,141 @@
   <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Contabilidad</ion-title>
+        <ion-title>Menú</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item routerLink="/home" routerDirection="root">
+          <div  class="update-card-icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
           Home
         </ion-item>
         <ion-item routerLink="/trabajadores" routerDirection="root">
+          <div  class="update-card-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
           Trabajadores
         </ion-item>
         <ion-item routerLink="/suministros" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="albums-outline"></ion-icon>
+          </div>
           Suministros
         </ion-item>
         <ion-item routerLink="/proyectos" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="reader-outline"></ion-icon>
+          </div>
           Proyectos
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
+
+
   <div class="ion-page" id="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Contabilidad</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      Tap the button in the toolbar to open the menu.
-    </ion-content>
+   <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Contabilidad</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Capital Disponible -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Capital Disponible</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <h2>{{ formatearMoneda(capital) }}</h2>
+    </ion-card-content>
+  </ion-card>
+  
+
+  <!-- Formulario de Transacciones -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Agregar Transacción</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Tipo</ion-label>
+        <ion-select [(ngModel)]="tipo">
+          <ion-select-option value="ingreso">Ingreso</ion-select-option>
+          <ion-select-option value="egreso">Egreso</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Monto</ion-label>
+        <ion-input type="number" [(ngModel)]="monto"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-input [(ngModel)]="descripcion"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="agregarTransaccion()">Agregar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Tabla de Transacciones -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Transacciones</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let transaccion of transacciones">
+          <ion-label>
+            <h2>{{ transaccion.tipo | titlecase }} - {{ formatearMoneda(transaccion.monto) }}</h2>
+            <p>{{ transaccion.descripcion }} ({{ transaccion.fecha }})</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Nómina -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Nómina</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Cargo</ion-label>
+        <ion-input [(ngModel)]="cargo"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Sueldo</ion-label>
+        <ion-input type="number" [(ngModel)]="sueldo"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="agregarTrabajador()">Agregar Trabajador</ion-button>
+
+      <ion-list>
+        <ion-item *ngFor="let trabajador of trabajadores">
+          <ion-label>
+            <h2>{{ trabajador.nombre }} ({{ trabajador.cargo }})</h2>
+            <p>Sueldo: {{ formatearMoneda(trabajador.sueldo) }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      
+
+      <h3>Total Nómina: {{ formatearMoneda(totalNomina) }}</h3>
+    </ion-card-content>
+  </ion-card>
+  <ion-button expand="block" color="success" (click)="generateSoporteFinanciero()">
+    Generar Soporte Financiero
+  </ion-button>
+</ion-content>
   </div>
 </ion-content>
 
