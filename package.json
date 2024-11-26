@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
     "@capacitor/core": "6.1.2",
+    "@capacitor/toast": "^6.0.3",
     "@ionic/angular": "^8.4.0",
     "@supabase/supabase-js": "^2.46.1",
     "firebase": "^11.0.2",

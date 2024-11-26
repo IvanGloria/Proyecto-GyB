@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 export interface Worker {
   id?: string; 

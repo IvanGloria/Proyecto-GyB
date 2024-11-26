@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/service/authService/auth-service.service';
+import { HistoryService } from 'src/app/shared/service/history/history.service';
 import { ProyectosService } from 'src/app/shared/service/proyectos/proyectos.service';
-import { TrabajadoresService } from 'src/app/shared/service/trabajadores/trabajadores.service';
 
 @Component({
   selector: 'app-proyectos',
@@ -21,7 +19,7 @@ export class ProyectosPage {
     private proyectosServices: ProyectosService,
     private router: Router,
     private authService: AuthService,
-    private trabajadoresService: TrabajadoresService
+    private historyService: HistoryService
   ) {}
 
   toggleMenu() {
@@ -41,24 +39,6 @@ export class ProyectosPage {
     });
   }
 
-  private loadProjects() {
-    this.proyectosServices.getAllProjects().subscribe((proyectos) => {
-      const workerCountObservables = proyectos.map((proyecto) =>
-        this.trabajadoresService.getWorkersByProject(proyecto.id!).pipe(
-          map((workers) => ({
-            ...proyecto,
-            workerCount: workers.length,
-          }))
-        )
-      );
-
-      forkJoin(workerCountObservables).subscribe((proyectosConTrabajadores) => {
-        this.proyectos = proyectosConTrabajadores;
-        this.filterProjects();
-      });
-    });
-  }
-
   filterProjects() {
     const term = this.searchTerm.toLowerCase();
     this.filteredProyectos = this.proyectos.filter((proyecto) =>
@@ -75,8 +55,25 @@ export class ProyectosPage {
   }
 
   deleteProject(id: string) {
-    this.proyectosServices.deleteProject(id).then(() => {
-      this.ionViewWillEnter(); // Recarga la lista de proyectos después de eliminar
-    });
+    // Guarda el proyecto antes de eliminarlo
+    const deletedProject = this.proyectos.find(proyecto => proyecto.id === id);
+  
+    if (deletedProject) {
+      this.proyectosServices.deleteProject(id).then(() => {
+        // Registra la acción en el historial
+        this.historyService.addUpdate(
+          'trash-outline', // Icono para eliminación
+          'Proyecto eliminado',
+          `El proyecto "${deletedProject.nombre}" ha sido eliminado.`
+        );
+  
+        this.ionViewWillEnter(); // Recargar la lista de proyectos
+      }).catch(error => {
+        console.error('Error eliminando el proyecto:', error);
+      });
+    } else {
+      console.warn('No se encontró el proyecto para eliminar.');
+    }
   }
+  
 }

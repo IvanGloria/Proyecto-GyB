@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/service/authService/auth-service.service';
 import { NavController } from '@ionic/angular';
+import { LoadingService } from 'src/app/shared/service/loadingService/loading-service.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ public loginform!: FormGroup;
 
 
   constructor( private readonly  authSrv: AuthService, private readonly navCtrl:
-     NavController ) {
+     NavController, private loadingSrv: LoadingService ) {
     this.initForm();
    }
   
@@ -26,14 +27,14 @@ public loginform!: FormGroup;
   public async dologin(){
     try{
       console.log(this.loginform.value);
-      // await this.loadingSrv.show();
+      await this.loadingSrv.show();
       const {email,password} = this.loginform.value;
       await this.authSrv.login(email,password);
       this.navCtrl.navigateForward("home");
-      // await this.loadingSrv.dismiss();
+      await this.loadingSrv.dismiss();
     }catch (error) {
       console.error(error);
-      // await this.loadingSrv.dismiss();
+      await this.loadingSrv.dismiss();
     }
   }
 
