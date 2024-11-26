@@ -31,10 +31,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/proyectos/proyectos.module').then(m => m.ProyectosPageModule) 
   },
   {
+    path: 'proyectos-add',
+    loadChildren: () => import('./pages/proyectos-add/proyectos-add.module').then( m => m.ProyectosAddPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
   },
+
 ];
 
 @NgModule({

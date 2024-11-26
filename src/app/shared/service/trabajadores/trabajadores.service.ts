@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 export interface Worker {
   id?: string; 
@@ -16,6 +16,9 @@ export interface Worker {
   afp: string;
   fi: string;
   image?: string;
+  proyectoId?: string; // Nuevo campo para el proyecto
+  proyectoActivo?: boolean; // Nuevo campo para estado en el proyecto
+  nombreProyecto?: string; // Para mostrar el nombre del proyecto
 }
 
 @Injectable({
@@ -29,12 +32,41 @@ export class TrabajadoresService {
   }
 
   getWorkers(userId: string): Observable<Worker[]> {
-    return this.firestore.collection<Worker>('Trabajadores', ref => 
-      ref.where('userId', '==', userId))
+    return this.firestore
+      .collection<Worker>('Trabajadores', (ref) => ref.where('userId', '==', userId))
       .snapshotChanges()
       .pipe(
-        map(actions => 
-          actions.map(a => {
+        map((actions) =>
+          actions.map((a) => {
+            const data = a.payload.doc.data() as Worker;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })
+        )
+      );
+  }
+
+  getProjectNames(): Observable<{id: string, nombre: string}[]> {
+    return this.firestore.collection('Proyectos')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => ({
+          id: a.payload.doc.id,
+          nombre: (a.payload.doc.data() as any).nombre
+        })))
+      );
+  }
+
+  getWorkersByProject(projectId: string): Observable<Worker[]> {
+    return this.firestore
+      .collection<Worker>('Trabajadores', (ref) => 
+        ref.where('proyectoId', '==', projectId)
+           .where('proyectoActivo', '==', true)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
             const data = a.payload.doc.data() as Worker;
             const id = a.payload.doc.id;
             return { id, ...data };

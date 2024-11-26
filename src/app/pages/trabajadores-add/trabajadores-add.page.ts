@@ -6,6 +6,7 @@ import { SupabaseService } from 'src/app/shared/service/storageService/supabase.
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HistoryService } from 'src/app/shared/service/history/history.service';
 import { AuthService } from 'src/app/shared/service/authService/auth-service.service';
+import { ProyectosService } from 'src/app/shared/service/proyectos/proyectos.service';
 
 @Component({
   selector: 'app-trabajadores-add',
@@ -18,14 +19,22 @@ export class TrabajadoresAddPage implements OnInit {
   userId: string | undefined;
   editId: string | null = null;
   selectedImage: File | null = null;
+  proyectos: any[] = [];
+  selectedProject: string | null = null;
 
   epsOptions: string[] = ['Sura', 'Coomeva', 'Mutual ser', 'Sanitas', 'Coosalud', 'Salud total', 'Cajacopi', 'Confamiliar'];
   afpOptions: string[] = ['Colfondos', 'Colpensiones', 'Fonprecon', 'Porvenir', 'Proteccion'];
 
   constructor(
-    private router: Router, private trabajadoresService: TrabajadoresService, private fb: FormBuilder,
-    private supabaseS: SupabaseService, private afAuth: AngularFireAuth, private historyService: HistoryService,
-    private authService: AuthService) {}
+    private router: Router, 
+    private trabajadoresService: TrabajadoresService, 
+    private fb: FormBuilder,
+    private supabaseS: SupabaseService, 
+    private afAuth: AngularFireAuth, 
+    private historyService: HistoryService,
+    private authService: AuthService, 
+    private proyectosServices: ProyectosService
+  ) {}
 
   ngOnInit(): void {
     this.workerForm = this.fb.group({
@@ -38,7 +47,9 @@ export class TrabajadoresAddPage implements OnInit {
       eps: ['', Validators.required],
       afp: ['', Validators.required],
       fi: ['', Validators.required],
-      image: ['']
+      image: [''],
+      proyectoId: [''], // Nuevo campo
+      proyectoActivo: [true] // Por defecto activo
     });
 
     this.afAuth.authState.subscribe((user) => {
@@ -52,23 +63,23 @@ export class TrabajadoresAddPage implements OnInit {
     if (state?.worker) {
       this.workerForm.patchValue(state.worker);
       this.editId = state.worker.id; 
+      this.selectedProject = state.worker.proyectoId; // Establecer proyecto seleccionado
     }
-  }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  logout() {
-    this.authService.logOut().then(() => {
-      this.router.navigate(['/login']);
+    this.proyectosServices.getAllProjects().subscribe((data) => {
+      this.proyectos = data;
     });
   }
 
   async onSubmit() {
     if (this.workerForm.valid && this.userId) {
       try {
-        const workerData = { ...this.workerForm.value, userId: this.userId };
+        const workerData = { 
+          ...this.workerForm.value, 
+          userId: this.userId,
+          proyectoId: this.selectedProject, // Asegurar que se guarde el proyecto
+          proyectoActivo: this.workerForm.get('proyectoActivo')?.value
+        };
   
         if (this.selectedImage) {
           const uploadResult = await this.supabaseS.uploadFoto(this.selectedImage);
@@ -100,5 +111,14 @@ export class TrabajadoresAddPage implements OnInit {
       }
     }
   }
-  
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  logout() {
+    this.authService.logOut().then(() => {
+      this.router.navigate(['/login']);
+    });
+  }
 }

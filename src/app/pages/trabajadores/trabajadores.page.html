@@ -71,7 +71,7 @@
         ></ion-input>
         <ion-button fill="solid" (click)="goToAddWorker()">
           <ion-icon slot="start" name="add"></ion-icon>
-          Agregar
+          Agregar Trabajador
         </ion-button>
       </ion-item>
       </ion-card>
@@ -87,7 +87,9 @@
             </ion-avatar>
             <ion-label>
               <h2>{{ worker.name + ' ' + worker.apellido }}</h2>
-              <p>{{ worker.role  }}</p>
+              <p>{{ worker.role }}</p>
+              <p>Proyecto Asociado: {{ worker.nombreProyecto }}</p>
+              <p>Estado en Proyecto: {{ worker.proyectoActivo ? 'Activo' : 'Inactivo' }}</p>
             </ion-label>
             <ion-buttons slot="end">
               <ion-button fill="clear" (click)="editWorker(worker)">

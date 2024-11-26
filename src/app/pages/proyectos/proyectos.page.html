@@ -2,21 +2,33 @@
   <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Proyectos</ion-title>
+        <ion-title>Menú</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item routerLink="/home" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="home-outline"></ion-icon>
+          </div>
           Home
         </ion-item>
         <ion-item routerLink="/trabajadores" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="person-outline"></ion-icon>
+          </div>
           Trabajadores
         </ion-item>
         <ion-item routerLink="/suministros" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="albums-outline"></ion-icon>
+          </div>
           Suministros
         </ion-item>
         <ion-item routerLink="/contabilidad" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="wallet-outline"></ion-icon>
+          </div>
           Contabilidad
         </ion-item>
       </ion-list>
@@ -29,10 +41,47 @@
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>Proyectos</ion-title>
+
+        <!-- Contenedor para el logo -->
+        <div class="menu-container">
+          <div class="logo-container">
+          <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" class="user-image" (click)="toggleMenu()">
+        </div>
+        </div>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding">
-      Tap the button in the toolbar to open the menu.
+    
+    <!-- Menú desplegable fuera del ion-toolbar -->
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <ion-item (click)="logout()"><ion-icon name="exit-outline" slot="start"></ion-icon>
+      Cerrar Sesión
+      </ion-item>
+    </div>
+
+    <ion-content class="proyectos-content">
+      <div class="search-and-add">
+    <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterProjects()" placeholder="Buscar proyecto"></ion-searchbar>
+    <ion-button (click)="navigateToAdd()">
+      <ion-icon slot="start" name="add"></ion-icon>
+      Agregar Proyecto
+    </ion-button>
+  </div>
+      <ion-card>
+      <ion-list>
+        <ion-item *ngFor="let proyecto of filteredProyectos">
+          <ion-label>
+            <h2>{{ proyecto.nombre }}</h2>
+            <p>Descripcion: {{ proyecto.descripcion }}</p>
+            <p>Ubicación: {{ proyecto.ubicacion }}</p>
+            <p>Fecha inicio: {{ proyecto.fechaInicio }}</p>
+            <p>Fecha fin: {{ proyecto.fechaFin }}</p>
+            <p>Estado: {{ proyecto.estado }}</p>
+          </ion-label>
+          <ion-button color="primary" (click)="editProject(proyecto.id)">Editar</ion-button>
+          <ion-button color="danger" (click)="deleteProject(proyecto.id)">Eliminar</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
     </ion-content>
   </div>
 </ion-content>

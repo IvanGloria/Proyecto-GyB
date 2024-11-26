@@ -65,6 +65,18 @@
       <ion-label position="stacked">Fecha de ingreso</ion-label>
       <ion-input type="date" formControlName="fi" required></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label>Proyecto Asociado</ion-label>
+      <ion-select formControlName="proyectoId" [(ngModel)]="selectedProject">
+        <ion-select-option *ngFor="let proyecto of proyectos" [value]="proyecto.id">
+          {{ proyecto.nombre }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Activo en Proyecto</ion-label>
+      <ion-toggle formControlName="proyectoActivo"></ion-toggle>
+    </ion-item>
     <br>
     <br>
     <ion-item>

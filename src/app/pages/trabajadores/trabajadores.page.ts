@@ -34,23 +34,16 @@ export class TrabajadoresPage implements OnInit {
     });
   }
 
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  logout() {
-    this.authService.logOut().then(() => {
-      this.router.navigate(['/login']);
-    });
-  }
-
-
   loadWorkers() {
     if (this.userId) {
       this.trabajadoresService.getWorkers(this.userId).subscribe(workers => {
-        this.workers = workers;
-        this.filteredWorkers = [...this.workers];
+        this.trabajadoresService.getProjectNames().subscribe(proyectos => {
+          this.workers = workers.map(worker => ({
+            ...worker,
+            nombreProyecto: proyectos.find(p => p.id === worker.proyectoId)?.nombre || 'Sin proyecto'
+          }));
+          this.filteredWorkers = [...this.workers];
+        });
       });
     }
   }
@@ -81,7 +74,16 @@ export class TrabajadoresPage implements OnInit {
   editWorker(worker: Worker) {
     this.router.navigate(['/trabajadores-add'], { state: { worker } });
   }
-  
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  logout() {
+    this.authService.logOut().then(() => {
+      this.router.navigate(['/login']);
+    });
+  }
 
   goToAddWorker() {
     this.router.navigate(['/trabajadores-add']);

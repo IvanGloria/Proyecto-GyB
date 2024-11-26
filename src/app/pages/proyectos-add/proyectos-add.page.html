@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ editMode ? 'Editar Proyecto' : 'Agregar Proyecto' }}</ion-title>
+    
+    <!-- Contenedor para el logo -->
+    <div class="menu-container">
+      <div class="logo-container">
+      <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" class="user-image" (click)="toggleMenu()">
+    </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Menú desplegable fuera del ion-toolbar -->
+<div class="dropdown-menu" *ngIf="isMenuOpen">
+  <ion-item (click)="logout()"><ion-icon name="exit-outline" slot="start"></ion-icon>
+  Cerrar Sesión
+  </ion-item>
+</div>
+
+<ion-content>
+  <form [formGroup]="projectForm" (ngSubmit)="saveProject()">
+    <div class="padd-card">
+    <ion-card>
+    <ion-item>
+      <ion-label position="stacked">Nombre del proyecto</ion-label>
+      <ion-input formControlName="nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Descripcion</ion-label>
+      <ion-input formControlName="descripcion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Ubicación</ion-label>
+      <ion-input formControlName="ubicacion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Fecha de inicio</ion-label>
+      <br>
+      <ion-datetime formControlName="fechaInicio"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Fecha de finalización</ion-label>
+      <br>
+      <ion-datetime formControlName="fechaFin"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select formControlName="estado">
+        <ion-select-option value="Activo">Activo</ion-select-option>
+        <ion-select-option value="Inactivo">Inactivo</ion-select-option>
+        <ion-select-option value="Finalizado">Finalizado</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="!projectForm.valid" class="ion-margin">
+      {{ editMode ? 'Actualizar' : 'Guardar' }}</ion-button>
+    </ion-card>
+    </div>
+  </form>
+</ion-content>
