@@ -8,43 +8,57 @@
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item routerLink="/trabajadores" routerDirection="root">
-          <div  class="update-card-icon">
+          <div class="update-card-icon">
             <ion-icon name="person-outline"></ion-icon>
           </div>
           Trabajadores
         </ion-item>
+        <ion-item routerLink="/proyectos" routerDirection="root">
+          <div class="update-card-icon">
+            <ion-icon name="reader-outline"></ion-icon>
+          </div>
+          Proyectos
+        </ion-item>
         <ion-item routerLink="/suministros" routerDirection="root">
-          <div  class="update-card-icon">
-          <ion-icon name="albums-outline"></ion-icon>
+          <div class="update-card-icon">
+            <ion-icon name="albums-outline"></ion-icon>
           </div>
           Suministros
         </ion-item>
         <ion-item routerLink="/contabilidad" routerDirection="root">
-          <div  class="update-card-icon">
-          <ion-icon name="wallet-outline"></ion-icon>
+          <div class="update-card-icon">
+            <ion-icon name="wallet-outline"></ion-icon>
           </div>
           Contabilidad
-        </ion-item>
-        <ion-item routerLink="/proyectos" routerDirection="root">
-          <div  class="update-card-icon">
-          <ion-icon name="reader-outline"></ion-icon>
-          </div>
-          Proyectos
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
 
   <div class="ion-page" id="main-content">
-    <ion-header>
+    <ion-header class="ion-header">
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>GYB CONSTRUCCIONES</ion-title>
-        <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" slot="end">
+    
+        <!-- Contenedor para el logo -->
+        <div class="menu-container">
+          <div class="logo-container">
+          <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" class="user-image" (click)="toggleMenu()">
+        </div>
+        </div>
       </ion-toolbar>
     </ion-header>
+    
+    <!-- Menú desplegable fuera del ion-toolbar -->
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <ion-item (click)="logout()"><ion-icon name="exit-outline" slot="start"></ion-icon>
+      Cerrar Sesión
+      </ion-item>
+    </div>
+
     <ion-content class="ion-home">
       <div class="welcome-card">
         <h2>¡Bienvenido a GYB Construcciones!</h2>
@@ -52,24 +66,44 @@
       </div>
 
       <div class="updates-section">
-        <ion-card *ngIf="updates.length === 0">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Historial</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <p>Total de actualizaciones: {{totalUpdates}}</p>
+
+        <ion-card *ngIf="displayedUpdates.length === 0">
           <ion-card-content>
             <p>No hay actualizaciones recientes.</p>
           </ion-card-content>
         </ion-card>
-      
-        <div *ngFor="let update of updates" class="update-card">
+
+        <div *ngFor="let update of displayedUpdates" class="update-card">
           <div class="update-card-icon">
-            <ion-icon [name]="update.icon"></ion-icon>
+            <ion-icon [name]="update.icon" slot="start"></ion-icon>
           </div>
           <div class="update-card-content">
             <h4>{{ update.title }}</h4>
             <p>{{ update.description }}</p>
-            <small>{{ update.time | date: 'short' }}</small>
+            <small *ngIf="update.time; else noDate">{{ update.time | date: 'short' }}</small>
+            <ng-template #noDate><em>Fecha no disponible</em></ng-template>
           </div>
+          <ion-button fill="clear" color="danger" (click)="deleteUpdate(update.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination">
+          <button 
+            *ngFor="let page of pages; let i = index" 
+            [class.active]="currentPage === i + 1" 
+            (click)="goToPage(i + 1)">
+            {{ i + 1 }}
+          </button>
         </div>
       </div>
-        
     </ion-content>
   </div>
-    </ion-content>
+</ion-content>

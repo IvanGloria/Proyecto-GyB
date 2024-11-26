@@ -18,7 +18,7 @@ const Modules = [
 const Components = [
   InputComponent,
   ButtonComponent,
-  AvatarComponent
+  AvatarComponent,
 ];
 
 const Providers = [

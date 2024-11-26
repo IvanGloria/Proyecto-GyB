@@ -4,6 +4,8 @@ import { TrabajadoresService } from 'src/app/shared/service/trabajadores/trabaja
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SupabaseService } from 'src/app/shared/service/storageService/supabase.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { HistoryService } from 'src/app/shared/service/history/history.service';
+import { AuthService } from 'src/app/shared/service/authService/auth-service.service';
 
 @Component({
   selector: 'app-trabajadores-add',
@@ -11,6 +13,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./trabajadores-add.page.scss'],
 })
 export class TrabajadoresAddPage implements OnInit {
+  isMenuOpen = false;
   workerForm!: FormGroup;
   userId: string | undefined;
   editId: string | null = null;
@@ -21,7 +24,8 @@ export class TrabajadoresAddPage implements OnInit {
 
   constructor(
     private router: Router, private trabajadoresService: TrabajadoresService, private fb: FormBuilder,
-    private supabaseS: SupabaseService, private afAuth: AngularFireAuth) {}
+    private supabaseS: SupabaseService, private afAuth: AngularFireAuth, private historyService: HistoryService,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.workerForm = this.fb.group({
@@ -51,11 +55,21 @@ export class TrabajadoresAddPage implements OnInit {
     }
   }
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  logout() {
+    this.authService.logOut().then(() => {
+      this.router.navigate(['/login']);
+    });
+  }
+
   async onSubmit() {
     if (this.workerForm.valid && this.userId) {
       try {
         const workerData = { ...this.workerForm.value, userId: this.userId };
-
+  
         if (this.selectedImage) {
           const uploadResult = await this.supabaseS.uploadFoto(this.selectedImage);
           if (uploadResult) {
@@ -63,17 +77,28 @@ export class TrabajadoresAddPage implements OnInit {
             workerData.image = imageUrl;
           }
         }
-
+  
         if (this.editId) {
           await this.trabajadoresService.updateWorker(this.editId, workerData).toPromise();
+          this.historyService.addUpdate(
+            'create-outline',
+            'Trabajador actualizado',
+            `El trabajador ${workerData.name} ${workerData.apellido} ha sido actualizado.`
+          );
         } else {
           await this.trabajadoresService.addWorker(workerData).toPromise();
+          this.historyService.addUpdate(
+            'person-add-outline',
+            'Nuevo trabajador agregado',
+            `Se agregó al trabajador ${workerData.name} ${workerData.apellido}.`
+          );
         }
-
+  
         this.router.navigate(['/trabajadores']);
       } catch (error) {
-        console.error('Error saving worker:', error);
+        console.error('Error guardando el trabajador:', error);
       }
     }
   }
+  
 }

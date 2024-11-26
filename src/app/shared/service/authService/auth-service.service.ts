@@ -27,4 +27,13 @@ export class AuthService {
       })
     })
   }
+
+  public logOut(){
+    return new Promise((resolve, reject) => {
+      this.GyBAuth.signOut()
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+    });
+    }
+
 }

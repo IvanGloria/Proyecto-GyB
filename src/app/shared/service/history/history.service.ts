@@ -1,25 +1,47 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map, Observable } from 'rxjs';
+import { Timestamp } from '@angular/fire/firestore';
+
+interface Update {
+  id: string;
+  time?: Date | null;
+  [key: string]: any;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class HistoryService {
-  private updates: { icon: string; title: string; description: string; time: Date }[] = [];
+  private collectionName = 'History';
 
-  constructor() {}
+  constructor(private firestore: AngularFirestore) {}
 
-  // Método para agregar una nueva actualización
   addUpdate(icon: string, title: string, description: string) {
-    this.updates.unshift({
+    const update = {
       icon,
       title,
       description,
-      time: new Date(),
-    });
+      time: Timestamp.fromDate(new Date()),
+    };
+    return this.firestore.collection(this.collectionName).add(update);
   }
 
-  // Obtener todas las actualizaciones
-  getUpdates() {
-    return this.updates;
+  getUpdates(): Observable<Update[]> {
+    return this.firestore
+      .collection<Update>(this.collectionName, (ref) => ref.orderBy('time', 'desc'))
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        map((updates) =>
+          updates.map((update) => ({
+            ...update,
+            time: update.time instanceof Timestamp ? update.time.toDate() : update.time,
+          }))
+        )
+      );
+  }
+
+  deleteUpdate(id: string) {
+    return this.firestore.collection(this.collectionName).doc(id).delete();
   }
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TrabajadoresService, Worker } from 'src/app/shared/service/trabajadores/trabajadores.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { HistoryService } from 'src/app/shared/service/history/history.service';
+import { AuthService } from 'src/app/shared/service/authService/auth-service.service';
 
 @Component({
   selector: 'app-trabajadores',
@@ -9,6 +11,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./trabajadores.page.scss'],
 })
 export class TrabajadoresPage implements OnInit {
+  isMenuOpen = false;
   workers: Worker[] = [];
   filteredWorkers: Worker[] = [];
   searchTerm: string = '';
@@ -17,7 +20,9 @@ export class TrabajadoresPage implements OnInit {
   constructor(
     private router: Router, 
     private trabajadoresService: TrabajadoresService,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private historyService: HistoryService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -28,6 +33,18 @@ export class TrabajadoresPage implements OnInit {
       }
     });
   }
+
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  logout() {
+    this.authService.logOut().then(() => {
+      this.router.navigate(['/login']);
+    });
+  }
+
 
   loadWorkers() {
     if (this.userId) {
@@ -46,23 +63,25 @@ export class TrabajadoresPage implements OnInit {
   }
 
   deleteWorker(worker: Worker) {
-    if (worker.id) { 
-      this.trabajadoresService.deleteWorker(worker.id)
-        .subscribe({
-          next: () => {
-            console.log('Trabajador eliminado exitosamente');
-            this.loadWorkers(); // Recargar la lista
-          },
-          error: (error) => {
-            console.error('Error al eliminar trabajador:', error);
-          }
-        });
+    if (worker.id) {
+      this.trabajadoresService.deleteWorker(worker.id).subscribe({
+        next: () => {
+          this.historyService.addUpdate(
+            'person-remove-outline', 
+            'Trabajador eliminado',
+            `El trabajador ${worker.name} ${worker.apellido} ha sido eliminado.`
+          );
+          this.loadWorkers();
+        },
+        error: (error) => console.error('Error al eliminar trabajador:', error),
+      });
     }
   }
-
+  
   editWorker(worker: Worker) {
     this.router.navigate(['/trabajadores-add'], { state: { worker } });
   }
+  
 
   goToAddWorker() {
     this.router.navigate(['/trabajadores-add']);

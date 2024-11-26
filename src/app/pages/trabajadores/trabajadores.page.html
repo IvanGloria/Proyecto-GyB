@@ -13,6 +13,12 @@
           </div>
           Home
         </ion-item>
+        <ion-item routerLink="/proyectos" routerDirection="root">
+          <div  class="update-card-icon">
+          <ion-icon name="reader-outline"></ion-icon>
+          </div>
+          Proyectos
+        </ion-item>
         <ion-item routerLink="/suministros" routerDirection="root">
           <div  class="update-card-icon">
           <ion-icon name="albums-outline"></ion-icon>
@@ -25,12 +31,6 @@
           </div>
           Contabilidad
         </ion-item>
-        <ion-item routerLink="/proyectos" routerDirection="root">
-          <div  class="update-card-icon">
-          <ion-icon name="reader-outline"></ion-icon>
-          </div>
-          Proyectos
-        </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
@@ -41,12 +41,25 @@
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>Trabajadores</ion-title>
-        <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" slot="end">
+
+        <!-- Contenedor para el logo -->
+        <div class="menu-container">
+          <div class="logo-container">
+          <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" class="user-image" (click)="toggleMenu()">
+        </div>
+        </div>
       </ion-toolbar>
     </ion-header>
+    
+    <!-- Menú desplegable fuera del ion-toolbar -->
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <ion-item (click)="logout()"><ion-icon name="exit-outline" slot="start"></ion-icon>
+      Cerrar Sesión
+      </ion-item>
+    </div>
 
     <!-- Buscador -->
-    <ion-content class="ion-padding">
+    <ion-content class="trabajadores-content ion-padding">
       <div class="search-card"> 
       <ion-card>
       <ion-item>
@@ -69,6 +82,9 @@
       <ion-card>
         <ion-list>
           <ion-item *ngFor="let worker of filteredWorkers">
+            <ion-avatar slot="start">
+              <ion-img [src]="worker.image"></ion-img>
+            </ion-avatar>
             <ion-label>
               <h2>{{ worker.name + ' ' + worker.apellido }}</h2>
               <p>{{ worker.role  }}</p>
