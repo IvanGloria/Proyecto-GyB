@@ -37,14 +37,28 @@
 
 
   <div class="ion-page" id="main-content">
-   <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Contabilidad</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Proyectos</ion-title>
+
+        <!-- Contenedor para el logo -->
+        <div class="menu-container">
+          <div class="logo-container">
+          <img src="/assets/image/logoGYB.jpg" alt="Logo de la empresa" class="user-image" (click)="toggleMenu()">
+        </div>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    
+    <!-- Menú desplegable fuera del ion-toolbar -->
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <ion-item (click)="logout()"><ion-icon name="exit-outline" slot="start"></ion-icon>
+      Cerrar Sesión
+      </ion-item>
+    </div>
 
 <ion-content class="ion-padding">
   
@@ -139,7 +153,3 @@
 </ion-content>
   </div>
 </ion-content>
-
-
-  
-

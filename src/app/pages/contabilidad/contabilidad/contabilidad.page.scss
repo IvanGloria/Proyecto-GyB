@@ -1,0 +1,88 @@
+/* Fondo empresarial con degradado */
+ion-content {
+  --background: linear-gradient(135deg, #a8c4e0 1%, #ffffff 50%, #a8c4e0 90%);
+}
+
+ion-title{
+    font-family: 'Cooper Black', sans-serif;
+    color: #27588a;
+  }
+
+  .update-card-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #74b9ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    margin-right: 15px;
+  }
+
+  .menu-container {
+    position: absolute;
+    top: 10px; /* Ajusta según tu diseño */
+    right: 20px; /* Ajusta según tu diseño */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 10; /* Asegura que el menú esté encima de otros elementos */
+  }
+  
+  /* Contenedor del logo en la esquina superior derecha */
+  .menu-container {
+    position: absolute;
+    top: 0px; /* Ajusta según tu diseño */
+  }
+  
+  /* Imagen del usuario (logo) */
+  .user-image {
+    cursor: pointer;
+    width: 60px; 
+    height: 60px;
+    border-radius: 50%;
+  }
+  
+  /* Menú desplegable */
+  .dropdown-menu {
+    cursor: pointer;
+    position: absolute;
+    top: 60px; /* Ajusta para que quede debajo del logo */
+    right: 10px; /* Alineado al logo */
+    background-color: white;
+    border-radius: 8px;
+    z-index: 11; /* Más alto que otros elementos */
+    padding: 10px 0;
+    width: 150px; /* Ancho del menú */
+  }
+  
+  .dropdown-menu ion-icon {
+    cursor: pointer;
+    font-size: 18px;
+    color: #27588a; /* Color acorde al diseño */
+    margin-right: 10px; /* Separación entre ícono y texto */
+  }
+  
+  
+  /* Estilo del contenedor del logo */
+  .logo-container {
+    width: 55px; /* Ajusta el tamaño del círculo */
+    height: 55px;
+    border-radius: 50%; /* Convierte el contenedor en un círculo */
+    overflow: hidden; /* Asegura que el contenido quede dentro del círculo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #74b9ff; /* Agrega un borde para destacar el círculo */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar un efecto 3D */
+  }
+  
+  /* Ajusta la imagen para que encaje en el círculo */
+  .logo-container .user-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen sin distorsionarla */
+    cursor: pointer;
+  }

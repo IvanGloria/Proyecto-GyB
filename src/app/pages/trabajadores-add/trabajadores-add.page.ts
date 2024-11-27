@@ -48,8 +48,8 @@ export class TrabajadoresAddPage implements OnInit {
       afp: ['', Validators.required],
       fi: ['', Validators.required],
       image: [''],
-      proyectoId: [''], // Nuevo campo
-      proyectoActivo: [true] // Por defecto activo
+      proyectoId: [''], 
+      proyectoActivo: [true] 
     });
 
     this.afAuth.authState.subscribe((user) => {
@@ -63,7 +63,7 @@ export class TrabajadoresAddPage implements OnInit {
     if (state?.worker) {
       this.workerForm.patchValue(state.worker);
       this.editId = state.worker.id; 
-      this.selectedProject = state.worker.proyectoId; // Establecer proyecto seleccionado
+      this.selectedProject = state.worker.proyectoId; 
     }
 
     this.proyectosServices.getAllProjects().subscribe((data) => {

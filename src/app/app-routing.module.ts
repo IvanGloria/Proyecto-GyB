@@ -40,12 +40,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/proyectos-add/proyectos-add.module').then( m => m.ProyectosAddPageModule),
     canActivate : [guardSGuard]
   },
-  
+  {
+    path: 'contabilidad',
+    loadChildren: () => import('./pages/contabilidad/contabilidad/contabilidad.module').then( m => m.ContabilidadPageModule),
+    canActivate : [guardSGuard] 
+  },
   {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
   },
+
 
 ];
 
